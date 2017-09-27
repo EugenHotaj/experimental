@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Serializer {
   private static final String TOKENIZATION_DELIMITER = " ";
   private static final String SERIALIZATION_DELIMITER = "-";
@@ -39,21 +42,23 @@ public class Serializer {
    * e.g.: "2-6-5-hello,worldIGNORED_CHARS" -> "hello, world"
    */
   private static String deserialize(String input) {
-    String[] tokens = input.split(SERIALIZATION_DELIMITER);
-    int numTokens = Integer.parseInt(tokens[0]);
+    // This is probably of of the dumbest ways to do this. Escaping would work much better.
+    int numTokens = Integer.parseInt(input.charAt(0) + "");
+    List<Integer> tokenSizes = new ArrayList<>()
+    for (int i = 1; i < numTokens; i++) {
+        
+      tokens.add(Integer.parseInt());
+    }
+    String serialized = tokens.get(tokens.size()-1);
 
-    if (tokens.length < numTokens + 1) {
+    if (tokens.size() < numTokens) {
       throw new IllegalArgumentException("The given String is incorrectly serialized.");
     }
 
-    String serialized = tokens[tokens.length - 1];
     String deserialized = ""; // Should use StringBuilder if expecting large input.
-
     int nextTokenPtr = 0;
-    // The bounds are [1, length-2] since tokens[0] contains the total number of tokens and 
-    // tokens[length-1] contains the serialized String.
-    for (int i = 1; i < tokens.length - 1; i++) {
-      int tokenLength = Integer.parseInt(tokens[i]);
+    for (int i = 1; i < numTokens; i++) {
+      int tokenLength = Integer.parseInt(tokens.get(i));
       deserialized += serialized.substring(nextTokenPtr, nextTokenPtr + tokenLength) + TOKENIZATION_DELIMITER;
       nextTokenPtr += tokenLength;
     }
