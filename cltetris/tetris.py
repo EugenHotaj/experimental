@@ -7,8 +7,7 @@ import numpy as np
 import tcod
 
 WINDOW_WIDTH = 10
-WINDOW_HEIGHT = 20
-
+WINDOW_HEIGHT = 20 
 tetrominoes = {
     0: ['xxxx', 'x\nx\nx\nx'],
     1: ['xx\nxx'],
@@ -56,19 +55,26 @@ def check_collision(game_board, tetromino, idx, x, y):
     return False
 
 
+# TODO(eugenhotaj): this should be split out into two functions.
 def reposition(game_board, tetromino, idx, x, dx, y, dy):
     """Repositions the tetromino if the moved to space is blocked."""
+    # Move tetromino inside board if it moved out during rotation.
     width = get_width(tetromino, idx)
+    x = max(0, x)
+    x = min(WINDOW_WIDTH - width, x) 
     height = get_height(tetromino, idx)
+    y = max(0, y)
+    y = min(WINDOW_HEIGHT - height, y) 
+
     x_ = x + dx
-    y_ = y + dy
     if x_ >= 0 and x_ + width <= WINDOW_WIDTH and not check_collision(
             game_board, tetromino, idx, x_, y):
         x = x_
-    print(y_ + height <= WINDOW_HEIGHT)
+    y_ = y + dy
     if y_ >= 0 and y_ + height <= WINDOW_HEIGHT and not check_collision(
             game_board, tetromino, idx, x, y_):
         y = y_
+
     return x, y
 
 
