@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     plt.subplot(121)
     plt.title("Linear Regression")
-    plt.scatter(X, y, 8
+    plt.scatter(X, y, 8)
     plt.plot([0, 100], [line(0), line(100)], color='red')
 
     plt.subplot(122)
